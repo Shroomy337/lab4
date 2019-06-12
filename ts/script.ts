@@ -80,7 +80,7 @@ class Product {
 }
 
 //Перечисление доступных цветов
-enum Color { Black = "Чёрный", Gray = "Серый", Pink = "Розовый" };
+enum Color { Black = "Чёрный", Gray = "Серый", Pink = "Розовый", Green = "Зеленый", Yellow = "Желтый" };
 
 interface Shoes {
     dimension: number; //размер
@@ -165,7 +165,7 @@ class Refrigies extends Product {
         if (this.haveColdBox) {
             let p = document.createElement("p");
             p.setAttribute("class", "card-text text-info m-0");
-            p.innerHTML = "Есть холодильная камера";
+            p.innerHTML = "Есть сушка";
             obj.firstChild.firstChild.insertBefore(p, obj.firstChild.firstChild.childNodes[2]);
         }
 
@@ -188,7 +188,7 @@ class Refrigies extends Product {
 
             let lab = document.createElement("p");
             lab.appendChild(inp);
-            lab.innerHTML += "Есть холодильная камера<br>";
+            lab.innerHTML += "Есть сушка<br>";
 
             let div = document.getElementById('myTools');
             div.appendChild(lab);
@@ -248,7 +248,7 @@ class Jackets extends Product {
         if (this.havePocket) {
             let p = document.createElement("p");
             p.setAttribute("class", "card-text text-info m-0");
-            p.innerHTML = "Есть карманы";
+            p.innerHTML = "Есть спец. тех.";
             obj.firstChild.firstChild.insertBefore(p, obj.firstChild.firstChild.childNodes[2]);
         }
 
@@ -272,7 +272,7 @@ class Jackets extends Product {
 
             let lab = document.createElement("p");
             lab.appendChild(inp);
-            lab.innerHTML += "Карманы<br>";
+            lab.innerHTML += "Специальная технологія<br>";
 
             let div = document.getElementById('myTools');
             div.appendChild(lab);
@@ -447,45 +447,37 @@ function myByBtn(val: any) {
 //Действие на кнопке "купить"
 function WantBuy(val: any) {
     document.getElementById('modlalBtn').setAttribute("value", val);
+    document.getElementById('Sklad').innerHTML=String(productList[val].inStock);
 }
 
 //Инициализация корзины
 let basket: Basket = new Basket();
 //Список продуктов
 let productList: Product[] = [
-    new Headphones(0, "Наушники фирмы1", 816, "Прекрасные наушники! Сама английская королева слушает жесткий металл через такие же!", 4, true),
-    new FeltBoots(1, "Валенки2", 91.2, "Хороший выбор! В них тепло, хорошо. Обувь многосезонная - лето, осень, зима, весна.", 6,
-        [{ dimension: 44, color: Color.Black, quantity: 2 },
-            { dimension: 43, color: Color.Black, quantity: 3 },
-            { dimension: 42, color: Color.Black, quantity: 1 },
-            { dimension: 41, color: Color.Black, quantity: 2 },
-            { dimension: 44, color: Color.Gray, quantity: 2 },
-            { dimension: 39, color: Color.Gray, quantity: 1 },
-            { dimension: 45, color: Color.Gray, quantity: 1 },
-            { dimension: 42, color: Color.Gray, quantity: 1 },
-        ]),
-    new Headphones(2, "Наушники фирмы4", 119.50, "Дёшево не значит плохо! Эти наушники стоят своих денег!", 30, false),
-    new Headphones(3, "Наушники фирмы2", 144, "Это оптимальный выбор! Налетай торопись!", 15, true),
-    new Balalaika(4, "Балалайка1", 915, "Сам страдивари её выстругал! Мастер Страдивари Аарон Моисеевич ©. В комплекте к балалайке должен идти медведь.", 1),
-    new FeltBoots(5, "Валенки3", 65, "Валенки знаменитой российской фабрики Красный ЦинБаоЧен. Оригинальный продукт сделаный по технологиям прошлого.", 1),
-    new Headphones(6, "Наушники фирмы3", 265, "Тру поклонники музыки обязательно такие имеют! А ты что? Ты не тру?!", 0),
-    new FeltBoots(7, "Валенки1", 666.66, "Валенки великолепной работы слепого мастера Игната! В комплекте к валенкам идёт кокошник.", 2,
-        [
-            { dimension: 45, color: Color.Pink, quantity: 1 },
-            { dimension: 43, color: Color.Pink, quantity: 1 }
-        ]),
-    new Refrigies(8, "Холодильник", 1000, "Мощный холодильник с высталением температуры.", 9,
-        [
-            {haveColdBox: true, color: Color.Pink, power: 90},
-            {haveColdBox: false, color: Color.Black, power: 150}
-        ]),
-    new Jackets(9, "Куртка", 2500, "Это пуховик на холодную зиму с утеплением", 20,
-        [
-            {havePocket: true, color: Color.Gray, size: 44},
-            {havePocket: false, color: Color.Black, size: 50}
-        ]),
-    new Jackets(10, "Ветровка", 500, "Легкая ветровка на ветренную погоду.", 10,
-        [
-            {havePocket: false, color: Color.Gray, size: 46}
-        ])];
-
+    new Jackets(0, "Утюжочек-утюжок", 160, "Для маленьких девочек", 5, [
+        { havePocket: false, color: Color.Yellow, size: 50 }
+    ]),
+    new Jackets(1, "Утюг для бородачей", 7000, "А для бородачей только так и можно", 1, [
+        { havePocket: true, color: Color.Green, size: 44 },
+        { havePocket: false, color: Color.Black, size: 50 }
+    ]),
+    new Refrigies(2, "Стиралка от сименс", 750, "Умеет читать рэп", 10, [
+        { haveColdBox: true, color: Color.Gray, power: 90 },
+        { haveColdBox: false, color: Color.Black, power: 150 }
+    ]),
+    new Refrigies(3, "Стиралка от нокиа", 850, "Не умеет читать рэп", 3, [
+        { haveColdBox: false, color: Color.Black, power: 150 }
+    ]),
+     new Jackets(4, "Утюг водный", 1488, "Паровыпарывающая функция есть", 13, [
+        { havePocket: true, color: Color.Gray, size: 44 },
+        { havePocket: false, color: Color.Black, size: 50 }
+    ]),
+    new Refrigies(5, "Пральна машина державна", 1117, "Лише для нац.корпусу", 6, [
+        { haveColdBox: true, color: Color.Pink, power: 90 },
+        { haveColdBox: false, color: Color.Black, power: 150 }
+    ]),
+    new Jackets(6, "Праска", 2500, "2000 градусов АРРЛЕ", 20, [
+        { havePocket: true, color: Color.Gray, size: 44 },
+        { havePocket: false, color: Color.Black, size: 50 }
+    ]),
+]

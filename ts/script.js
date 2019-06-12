@@ -11,7 +11,8 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var Product = (function () {
+//Базовый класс
+var Product = /** @class */ (function () {
     function Product(id, name, price, description, inStock) {
         this.id = id;
         this.name = name;
@@ -19,6 +20,7 @@ var Product = (function () {
         this.description = description;
         this.inStock = inStock;
     }
+    //Инициализация карточки
     Product.prototype.Init = function () {
         var h5 = document.createElement("h5");
         h5.setAttribute("class", "card-title");
@@ -70,23 +72,29 @@ var Product = (function () {
         divcol.appendChild(divcard);
         return divcol;
     };
+    //Добавление карточки в строку
     Product.prototype.Embed = function (obj) {
         var prods = document.getElementById('rowts');
         prods.appendChild(obj);
     };
+    //Определение есть ли товар в наличии
     Product.prototype.IsAvailable = function () {
         return (this.inStock > 0) ? true : false;
     };
     return Product;
 }());
+//Перечисление доступных цветов
 var Color;
 (function (Color) {
     Color["Black"] = "\u0427\u0451\u0440\u043D\u044B\u0439";
     Color["Gray"] = "\u0421\u0435\u0440\u044B\u0439";
     Color["Pink"] = "\u0420\u043E\u0437\u043E\u0432\u044B\u0439";
+    Color["Green"] = "\u0417\u0435\u043B\u0435\u043D\u044B\u0439";
+    Color["Yellow"] = "\u0416\u0435\u043B\u0442\u044B\u0439";
 })(Color || (Color = {}));
 ;
-var FeltBoots = (function (_super) {
+//Класс со сложными особенностями
+var FeltBoots = /** @class */ (function (_super) {
     __extends(FeltBoots, _super);
     function FeltBoots(id, name, price, description, inStock, list) {
         var _this = _super.call(this, id, name, price, description, inStock) || this;
@@ -102,12 +110,14 @@ var FeltBoots = (function (_super) {
     }
     FeltBoots.prototype.Init = function () {
         var obj = _super.prototype.Init.call(this);
+        //Если есть большие размеры, то добавляем информацию об этом в карточку
         if (this.isBigSizes) {
             var p = document.createElement("p");
             p.setAttribute("class", "card-text text-info m-0");
             p.innerHTML = "Есть большие размеры";
             obj.firstChild.firstChild.insertBefore(p, obj.firstChild.firstChild.childNodes[2]);
         }
+        //Если есть информация о цвете, то добавляем её в карточку
         if (this.haveColors.length > 0) {
             var p = document.createElement("p");
             p.setAttribute("class", "card-text text-info m-0");
@@ -120,7 +130,9 @@ var FeltBoots = (function (_super) {
         }
         this.Embed(obj);
     };
+    //Вычисление сложных особенностей
     FeltBoots.prototype.CalculateFlags = function () {
+        //Поиск больших размеров
         this.isBigSizes = false;
         if (this.list != null)
             for (var i = 0; i < this.list.length; i++)
@@ -128,6 +140,7 @@ var FeltBoots = (function (_super) {
                     this.isBigSizes = true;
                     break;
                 }
+        //Поиск доступных цветов
         var k = 0;
         this.haveColors = [];
         if (this.list != null)
@@ -137,7 +150,7 @@ var FeltBoots = (function (_super) {
     };
     return FeltBoots;
 }(Product));
-var Refrigies = (function (_super) {
+var Refrigies = /** @class */ (function (_super) {
     __extends(Refrigies, _super);
     function Refrigies(id, name, price, description, inStock, list) {
         var _this = _super.call(this, id, name, price, description, inStock) || this;
@@ -156,7 +169,7 @@ var Refrigies = (function (_super) {
         if (this.haveColdBox) {
             var p = document.createElement("p");
             p.setAttribute("class", "card-text text-info m-0");
-            p.innerHTML = "Есть холодильная камера";
+            p.innerHTML = "Есть сушка";
             obj.firstChild.firstChild.insertBefore(p, obj.firstChild.firstChild.childNodes[2]);
         }
         if (this.haveColors.length > 0) {
@@ -176,12 +189,13 @@ var Refrigies = (function (_super) {
             inp.setAttribute("onclick", "CheckBox(this.checked)");
             var lab = document.createElement("p");
             lab.appendChild(inp);
-            lab.innerHTML += "Есть холодильная камера<br>";
+            lab.innerHTML += "Есть сушка<br>";
             var div = document.getElementById('myTools');
             div.appendChild(lab);
         }
         this.Embed(obj);
     };
+    //Вычисление сложных особенностей
     Refrigies.prototype.CalculateFlags = function () {
         this.haveColdBox = false;
         if (this.list != null)
@@ -211,7 +225,7 @@ function CheckBox(flag) {
             productList[i].Init();
     }
 }
-var Jackets = (function (_super) {
+var Jackets = /** @class */ (function (_super) {
     __extends(Jackets, _super);
     function Jackets(id, name, price, description, inStock, list) {
         var _this = _super.call(this, id, name, price, description, inStock) || this;
@@ -230,7 +244,7 @@ var Jackets = (function (_super) {
         if (this.havePocket) {
             var p = document.createElement("p");
             p.setAttribute("class", "card-text text-info m-0");
-            p.innerHTML = "Есть карманы";
+            p.innerHTML = "Есть спец. тех.";
             obj.firstChild.firstChild.insertBefore(p, obj.firstChild.firstChild.childNodes[2]);
         }
         if (this.haveColors.length > 0) {
@@ -250,12 +264,13 @@ var Jackets = (function (_super) {
             inp.setAttribute("onclick", "CheckPocket(this.checked)");
             var lab = document.createElement("p");
             lab.appendChild(inp);
-            lab.innerHTML += "Карманы<br>";
+            lab.innerHTML += "Специальная технологія<br>";
             var div = document.getElementById('myTools');
             div.appendChild(lab);
         }
         this.Embed(obj);
     };
+    //Вычисление сложных особенностей
     Jackets.prototype.CalculateFlags = function () {
         this.havePocket = false;
         if (this.list != null)
@@ -264,6 +279,7 @@ var Jackets = (function (_super) {
                     this.havePocket = true;
                     break;
                 }
+        //Поиск доступных цветов
         var k = 0;
         this.haveColors = [];
         if (this.list != null)
@@ -285,7 +301,8 @@ function CheckPocket(flag) {
             productList[i].Init();
     }
 }
-var Headphones = (function (_super) {
+//Класс с группировкой
+var Headphones = /** @class */ (function (_super) {
     __extends(Headphones, _super);
     function Headphones(id, name, price, description, inStock, isWireless) {
         var _this = _super.call(this, id, name, price, description, inStock) || this;
@@ -300,12 +317,14 @@ var Headphones = (function (_super) {
     }
     Headphones.prototype.Init = function () {
         var obj = _super.prototype.Init.call(this);
+        //Если наушники беспроводные, то добавляем информацию об этом в карточку
         if (this.isWireless) {
             var p = document.createElement("p");
             p.setAttribute("class", "card-text text-info m-0");
             p.innerHTML = "Беспроводные";
             obj.firstChild.firstChild.insertBefore(p, obj.firstChild.firstChild.childNodes[2]);
         }
+        //Если эти конкретные наушники беспроводные и нет чекбокса группировки, то добавляем его
         if (document.getElementById('isWireless') == null && this.isWireless != null && this.isWireless) {
             var inp = document.createElement("input");
             inp.setAttribute("type", "checkbox");
@@ -321,6 +340,7 @@ var Headphones = (function (_super) {
     };
     return Headphones;
 }(Product));
+//Группировка по беспроводным наушникам
 function CheckWireless(flag) {
     document.getElementById('rowts').innerHTML = "";
     if (flag) {
@@ -333,7 +353,8 @@ function CheckWireless(flag) {
             productList[i].Init();
     }
 }
-var Balalaika = (function (_super) {
+//Класс пока не имеющий отличий от базового
+var Balalaika = /** @class */ (function (_super) {
     __extends(Balalaika, _super);
     function Balalaika(id, name, price, description, inStock) {
         var _this = _super.call(this, id, name, price, description, inStock) || this;
@@ -350,12 +371,14 @@ var Balalaika = (function (_super) {
     };
     return Balalaika;
 }(Product));
-var Basket = (function () {
+var Basket = /** @class */ (function () {
     function Basket() {
-        this.list = [];
+        this.list = []; //Список товаров в корзине
     }
+    //Добавить товар в корзину. Возвращает результат операции
     Basket.prototype.Add = function (val) {
         var num = +document.getElementById('inputquantity').value;
+        //Проверка введенного количества товара. Если ввели ерунду, то выводится сообщение об ошибке. Иначе товар добавляется в корзину
         if (isNaN(num) || !((num ^ 0) === num) || num == 0 || productList[val].inStock < num) {
             if (productList[val].inStock < num)
                 document.getElementById('modlalMessag').innerHTML = "Столько на складе нет";
@@ -390,6 +413,7 @@ var Basket = (function () {
             }
         }
     };
+    //Пересчитать товары в корзине
     Basket.prototype.CalculateBasket = function () {
         if (this.list.length > 0) {
             var id = void 0;
@@ -407,44 +431,44 @@ var Basket = (function () {
     };
     return Basket;
 }());
+//Действие на кнопке "добавить в корзину"
 function myByBtn(val) {
     if (basket.Add(val))
         $('#buyModal').modal('hide');
 }
+//Действие на кнопке "купить"
 function WantBuy(val) {
     document.getElementById('modlalBtn').setAttribute("value", val);
+    document.getElementById('Sklad').innerHTML = String(productList[val].inStock);
 }
+//Инициализация корзины
 var basket = new Basket();
+//Список продуктов
 var productList = [
-    new Headphones(0, "Наушники фирмы1", 816, "Прекрасные наушники! Сама английская королева слушает жесткий металл через такие же!", 4, true),
-    new FeltBoots(1, "Валенки2", 91.2, "Хороший выбор! В них тепло, хорошо. Обувь многосезонная - лето, осень, зима, весна.", 6, [{ dimension: 44, color: Color.Black, quantity: 2 },
-        { dimension: 43, color: Color.Black, quantity: 3 },
-        { dimension: 42, color: Color.Black, quantity: 1 },
-        { dimension: 41, color: Color.Black, quantity: 2 },
-        { dimension: 44, color: Color.Gray, quantity: 2 },
-        { dimension: 39, color: Color.Gray, quantity: 1 },
-        { dimension: 45, color: Color.Gray, quantity: 1 },
-        { dimension: 42, color: Color.Gray, quantity: 1 },
+    new Jackets(0, "Утюжочек-утюжок", 160, "Для маленьких девочек", 5, [
+        { havePocket: false, color: Color.Yellow, size: 50 }
     ]),
-    new Headphones(2, "Наушники фирмы4", 119.50, "Дёшево не значит плохо! Эти наушники стоят своих денег!", 30, false),
-    new Headphones(3, "Наушники фирмы2", 144, "Это оптимальный выбор! Налетай торопись!", 15, true),
-    new Balalaika(4, "Балалайка1", 915, "Сам страдивари её выстругал! Мастер Страдивари Аарон Моисеевич ©. В комплекте к балалайке должен идти медведь.", 1),
-    new FeltBoots(5, "Валенки3", 65, "Валенки знаменитой российской фабрики Красный ЦинБаоЧен. Оригинальный продукт сделаный по технологиям прошлого.", 1),
-    new Headphones(6, "Наушники фирмы3", 265, "Тру поклонники музыки обязательно такие имеют! А ты что? Ты не тру?!", 0),
-    new FeltBoots(7, "Валенки1", 666.66, "Валенки великолепной работы слепого мастера Игната! В комплекте к валенкам идёт кокошник.", 2, [
-        { dimension: 45, color: Color.Pink, quantity: 1 },
-        { dimension: 43, color: Color.Pink, quantity: 1 }
+    new Jackets(1, "Утюг для бородачей", 7000, "А для бородачей только так и можно", 1, [
+        { havePocket: true, color: Color.Green, size: 44 },
+        { havePocket: false, color: Color.Black, size: 50 }
     ]),
-    new Refrigies(8, "Холодильник", 1000, "Мощный холодильник с высталением температуры.", 9, [
-        { haveColdBox: true, color: Color.Pink, power: 90 },
+    new Refrigies(2, "Стиралка от сименс", 750, "Умеет читать рэп", 10, [
+        { haveColdBox: true, color: Color.Gray, power: 90 },
         { haveColdBox: false, color: Color.Black, power: 150 }
     ]),
-    new Jackets(9, "Куртка", 2500, "Это пуховик на холодную зиму с утеплением", 20, [
+    new Refrigies(3, "Стиралка от нокиа", 850, "Не умеет читать рэп", 3, [
+        { haveColdBox: false, color: Color.Black, power: 150 }
+    ]),
+    new Jackets(4, "Утюг водный", 1488, "Паровыпарывающая функция есть", 13, [
         { havePocket: true, color: Color.Gray, size: 44 },
         { havePocket: false, color: Color.Black, size: 50 }
     ]),
-    new Jackets(10, "Ветровка", 500, "Легкая ветровка на ветренную погоду.", 10, [
-        { havePocket: false, color: Color.Gray, size: 46 }
-    ])
+    new Refrigies(5, "Пральна машина державна", 1117, "Лише для нац.корпусу", 6, [
+        { haveColdBox: true, color: Color.Pink, power: 90 },
+        { haveColdBox: false, color: Color.Black, power: 150 }
+    ]),
+    new Jackets(6, "Праска", 2500, "2000 градусов АРРЛЕ", 20, [
+        { havePocket: true, color: Color.Gray, size: 44 },
+        { havePocket: false, color: Color.Black, size: 50 }
+    ]),
 ];
-//# sourceMappingURL=script.js.map

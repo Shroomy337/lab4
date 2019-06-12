@@ -2,6 +2,7 @@
 
 * {
 	transition: .3s all;
+
 }
 
 a {
@@ -55,6 +56,8 @@ a {
 
 .mynav__item:hover {
 	background-color: #378fe7;
+	transform: scale(2);
+
 }
 
 .mynav__link {
@@ -64,6 +67,7 @@ a {
 
 .mynav__link:hover {
 	font-size: 17px;
+	transform: scale(2);
 }
 
 .main {

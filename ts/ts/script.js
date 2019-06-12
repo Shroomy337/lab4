@@ -156,7 +156,7 @@ var Refrigies = (function (_super) {
         if (this.haveColdBox) {
             var p = document.createElement("p");
             p.setAttribute("class", "card-text text-info m-0");
-            p.innerHTML = "Есть холодильная камера";
+            p.innerHTML = "Есть сушка";
             obj.firstChild.firstChild.insertBefore(p, obj.firstChild.firstChild.childNodes[2]);
         }
         if (this.haveColors.length > 0) {
@@ -176,7 +176,7 @@ var Refrigies = (function (_super) {
             inp.setAttribute("onclick", "CheckBox(this.checked)");
             var lab = document.createElement("p");
             lab.appendChild(inp);
-            lab.innerHTML += "Есть холодильная камера<br>";
+            lab.innerHTML += "Есть сушка<br>";
             var div = document.getElementById('myTools');
             div.appendChild(lab);
         }
@@ -230,7 +230,7 @@ var Jackets = (function (_super) {
         if (this.havePocket) {
             var p = document.createElement("p");
             p.setAttribute("class", "card-text text-info m-0");
-            p.innerHTML = "Есть карманы";
+            p.innerHTML = "Есть спец. тех.";
             obj.firstChild.firstChild.insertBefore(p, obj.firstChild.firstChild.childNodes[2]);
         }
         if (this.haveColors.length > 0) {
@@ -250,7 +250,7 @@ var Jackets = (function (_super) {
             inp.setAttribute("onclick", "CheckPocket(this.checked)");
             var lab = document.createElement("p");
             lab.appendChild(inp);
-            lab.innerHTML += "Карманы<br>";
+            lab.innerHTML += "Специальная технологія<br>";
             var div = document.getElementById('myTools');
             div.appendChild(lab);
         }
@@ -413,6 +413,7 @@ function myByBtn(val) {
 }
 function WantBuy(val) {
     document.getElementById('modlalBtn').setAttribute("value", val);
+    document.getElementById('Sklad').innerHTML = String(productList[val].inStock);
 }
 var basket = new Basket();
 var productList = [
@@ -435,16 +436,13 @@ var productList = [
         { dimension: 45, color: Color.Pink, quantity: 1 },
         { dimension: 43, color: Color.Pink, quantity: 1 }
     ]),
-    new Refrigies(8, "Холодильник", 1000, "Мощный холодильник с высталением температуры.", 9, [
+    new Refrigies(8, "Пральна машина", 1000, "САМСУНГ норм машина", 9, [
         { haveColdBox: true, color: Color.Pink, power: 90 },
         { haveColdBox: false, color: Color.Black, power: 150 }
     ]),
-    new Jackets(9, "Куртка", 2500, "Это пуховик на холодную зиму с утеплением", 20, [
+    new Jackets(9, "Праска", 2500, "2000 градусов АРРЛЕ", 20, [
         { havePocket: true, color: Color.Gray, size: 44 },
         { havePocket: false, color: Color.Black, size: 50 }
     ]),
-    new Jackets(10, "Ветровка", 500, "Легкая ветровка на ветренную погоду.", 10, [
-        { havePocket: false, color: Color.Gray, size: 46 }
-    ])
 ];
 //# sourceMappingURL=script.js.map
